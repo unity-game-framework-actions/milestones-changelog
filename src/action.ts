@@ -60,13 +60,26 @@ async function getMilestones(owner: string, repo: string, branch: string, state:
   if (branch === 'all') {
     milestones = await utility.getMilestones(owner, repo, state)
   } else {
-    milestones = await utility.getMilestonesByBranch(owner, repo, state, branch)
+    milestones = await getMilestonesByBranch(owner, repo, state, branch)
   }
 
   for (const milestone of milestones) {
     const date = utility.getValue(milestone, config.milestoneDate)
 
     if (date !== '') {
+      result.push(milestone)
+    }
+  }
+
+  return result
+}
+
+async function getMilestonesByBranch(owner: string, repo: string, state: string, branch: string): Promise<any[]> {
+  const milestones = await utility.getMilestones(owner, repo, state)
+  const result = []
+
+  for (const milestone of milestones) {
+    if (await utility.containsInBranch(owner, repo, branch, milestone.title)) {
       result.push(milestone)
     }
   }

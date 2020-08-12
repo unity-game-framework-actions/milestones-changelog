@@ -308,19 +308,6 @@ export async function getMilestones(owner: string, repo: string, state: string):
   return milestones
 }
 
-export async function getMilestonesByBranch(owner: string, repo: string, state: string, branch: string): Promise<any[]> {
-  const milestones = await getMilestones(owner, repo, state)
-  const result = []
-
-  for (const milestone of milestones) {
-    if (await containsInBranch(owner, repo, branch, milestone.title)) {
-      result.push(milestone)
-    }
-  }
-
-  return result
-}
-
 export async function getMilestoneIssues(owner: string, repo: string, milestone: number, state: string, labels: string): Promise<any[]> {
   const octokit = getOctokit()
   const issues = await octokit.paginate(`GET /repos/${owner}/${repo}/issues?milestone=${milestone}&state=${state}&labels=${labels}`)
