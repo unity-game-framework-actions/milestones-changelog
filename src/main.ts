@@ -6,17 +6,13 @@ run()
 
 async function run(): Promise<void> {
   try {
-    // const milestone = core.getInput('milestone', {required: true})
-    // const repository = utility.getRepository()
-    // const config = await utility.readConfig()
-    // const result = await action.createChangelog(repository.owner, repository.repo, milestone, config)
+    const branch = core.getInput('branch', {required: true})
+    const state = core.getInput('state', {required: true})
+    const repository = utility.getRepository()
+    const config = await utility.readConfigAny()
+    const result = await action.createChangelog(repository.owner, repository.repo, branch, state, config)
 
-    // const branch = core.getInput('branch', {required: true})
-    // const repository = utility.getRepository()
-    // const config = await utility.readConfig()
-    // const result = await action.createChangelog(repository.owner, repository.repo, branch, config)
-
-    // await utility.setOutput(result)
+    await utility.setOutput(result)
   } catch (error) {
     core.setFailed(error.message)
   }

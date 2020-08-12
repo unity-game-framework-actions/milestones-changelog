@@ -2,8 +2,8 @@
 changelog:
   # Body format of changelog.
   # Available values:
-  #   releases: Array of release objects. (Read about release object: https://docs.github.com/en/rest/reference/repos#list-releases.)
-  #   releasesFormatted: Formatted releases as text.
+  #   milestones: Array of milestone objects. (Read about milestone object: https://docs.github.com/en/rest/reference/issues#list-milestones.)
+  #   milestonesFormatted: Formatted milestones as text.
   body: |
     # Changelog
 
@@ -12,20 +12,24 @@ changelog:
     The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
     and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-    {releasesFormatted}
+    {milestonesFormatted}
     
-  # Release format.
+  # Milestone format.
   # Available values:
-  #   releases: Array of release objects. (Save as 'releases' in body.)
-  #   release: Release object. (Read about release object: https://docs.github.com/en/rest/reference/repos#get-a-release.)
+  #   milestones: Array of milestone objects. (Same as 'milestones' in body.)
+  #   milestone: Milestone object. (Read about milestone object: https://docs.github.com/en/rest/reference/issues#get-a-milestone.)
   #   date: Date object created based on 'dateFormat' settings.
-  release: |
-    ## [{release.tag_name}]({release.html_url}) - {date.year}-{date.month}-{date.day}  
+  #   milestoneChangelog: Generated changelog for milestone.
+  #   repository: Owner and repository name. For example, "Codertocat/Hello-World".
+  milestone: |
+    ## [{milestone.title}](https://github.com/{repository}/releases/tag/{milestone.title}) - {date.year}-{date.month}-{date.day}  
 
-  # Determines whether to include release body after 'release' format.
-  releaseBody: true
+    {milestoneChangelog}
 
-  # Used instead of release body format when is empty.
+  # Path of date property used in milestone formatting and sorting by date.
+  milestoneDate: due_on
+
+  # Used instead of milestone body format when is empty.
   empty: |
     - No release notes.
 
