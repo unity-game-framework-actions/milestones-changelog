@@ -36,7 +36,7 @@ async function formatMilestones(owner: string, repo: string, milestones: any[], 
 
   for (const milestone of milestones) {
     const milestoneDate = utility.getValue(milestone, config.changelog.milestoneDate)
-    const date = utility.formatDate(new Date(milestoneDate), config.dateFormat)
+    const date = utility.formatDate(new Date(milestoneDate), config.changelog.dateFormat)
     const milestoneChangelog = await changelog.createChangelog(owner, repo, milestone.number, config.milestone)
     const values = {
       milestones: milestones,

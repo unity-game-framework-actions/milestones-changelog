@@ -3906,7 +3906,7 @@ function formatMilestones(owner, repo, milestones, config) {
         let format = '';
         for (const milestone of milestones) {
             const milestoneDate = utility.getValue(milestone, config.changelog.milestoneDate);
-            const date = utility.formatDate(new Date(milestoneDate), config.dateFormat);
+            const date = utility.formatDate(new Date(milestoneDate), config.changelog.dateFormat);
             const milestoneChangelog = yield changelog.createChangelog(owner, repo, milestone.number, config.milestone);
             const values = {
                 milestones: milestones,
