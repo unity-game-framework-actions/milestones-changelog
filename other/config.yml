@@ -1,0 +1,116 @@
+# All milestones changelog generate config.
+changelog:
+  # Body format of changelog.
+  # Available values:
+  #   milestones: Array of milestone objects. (Read about milestone object: https://docs.github.com/en/rest/reference/issues#list-milestones.)
+  #   milestonesFormatted: Formatted milestones as text.
+  body: |
+    # Changelog
+
+    All notable changes to this project will be documented in this file.
+
+    The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+    and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+    {milestonesFormatted}
+    
+  # Milestone format.
+  # Available values:
+  #   milestones: Array of milestone objects. (Same as 'milestones' in body.)
+  #   milestone: Milestone object. (Read about milestone object: https://docs.github.com/en/rest/reference/issues#get-a-milestone.)
+  #   date: Date object created based on 'dateFormat' settings.
+  #   milestoneChangelog: Generated changelog for milestone.
+  #   repository: Owner and repository name. For example, "Codertocat/Hello-World".
+  milestone: |
+    ## [{milestone.title}](https://github.com/{repository}/releases/tag/{milestone.title}) - {date.year}-{date.month}-{date.day}  
+
+    {milestoneChangelog}
+
+  # Path of date property used in milestone formatting and sorting by date.
+  milestoneDate: due_on
+
+  # Used instead of milestone body format when is empty.
+  empty: |
+    - No release notes.
+
+  # Settings used to format publish date of issue.
+  # (Read about possible options: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat.)
+  dateFormat:
+    locale: en
+    day: 2-digit
+    month: 2-digit
+    year: numeric
+
+# Milestone changelog generate config.
+milestone:
+  # Body format of release changelog.
+  # Available values:
+  #   milestone: Milestone object. (Read about milestone object: https://docs.github.com/en/rest/reference/issues#get-a-milestone.)
+  #   groups: Array of the group objects. (Read about group object below.)
+  #   groupsFormatted: Formatted groups as text.
+  # Description of group object.
+  # group:
+  #   name: Name of group from config.
+  #   issues: Array of issue objects. (Read about issue object: https://docs.github.com/en/rest/reference/issues#get-an-issue.)
+  body: |
+    ### Release Notes
+
+    - [Milestone]({milestone.html_url}?closed=1)  
+        {milestone.description}
+    
+    {groupsFormatted}
+
+  # Used instead of 'body' format when no any issues found for milestone.
+  empty: |
+    ### Release Notes
+
+    - No release notes.
+
+  # Group format of issues.
+  # Available values:
+  #   milestone: Milestone object. (Same as milestone in body.)
+  #   groups: Array of the group objects. (Same as groups in body.)
+  #   group: Group object. (Read about group in body description.)
+  #   issuesFormatted: Formatted issues as text.
+  group: |
+    ### {group.name}
+    
+    {issuesFormatted}
+
+  # Issue format from group.
+  # Available values:
+  #   milestone: Milestone object. (Same as 'milestone' in body.)
+  #   groups: Array of the group objects. (Same as 'groups' in body.)
+  #   group: Group object. (Read about 'group' in body description.)
+  #   issue: Issue object. (Read about issue object: https://docs.github.com/en/rest/reference/issues#get-an-issue.)
+  issue: |
+    - {issue.title} ([#{issue.number}]({issue.html_url}))  
+
+  # Determines whether to include indented issue body after 'issue' format.
+  issueBody: true
+
+  # Setting to group issues before formatting.
+  # Every group has some properties.
+  # group:
+  #   name: Name of group.
+  #   state: State of issue to find in milestone. (Possible values: 'open', 'closed' or 'all', more about issues: https://docs.github.com/en/rest/reference/issues.)
+  #   labels: List of comma separated label names used to determine whether to include issue in group. (Example: 'bug,fix'.) 
+  groups:
+  - name: Added
+    state: all
+    labels: Feature
+  - name: Changed
+    state: all
+    labels: Change
+  - name: Deprecated
+    state: all
+    labels: Deprecation
+  - name: Removed
+    state: all
+    labels: Remove
+  - name: Fixed
+    state: all
+    labels: Bug
+  - name: Security
+    state: all
+    labels: Security
